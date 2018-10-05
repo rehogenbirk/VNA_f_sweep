@@ -1,3 +1,10 @@
+"""
+Description:
+Script to let the VNA perform a measurement of S-parameters with a variable frequency and a set amplitude.
+
+Rijk Hogenbirk, started on 24/09/18
+"""
+
 # =============================================================================
 # ## Import libraries
 # =============================================================================
@@ -13,8 +20,8 @@ import vna_functions as vna
 # =============================================================================
 
 ## Measurement settings
-f_unit  = 'MHZ' 
-f_start = 100   # in f_unit 
+f_unit  = 'MHZ'
+f_start = 100   # in f_unit
 f_stop  = 67000 # in f_unit
 
 num_points  = 8001 # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
@@ -22,7 +29,7 @@ num_points  = 8001 # MAX is 32001 points, 8001 is chosen as otherwise the acquis
 A_unit      = 'DBM'
 amplitude   = -50
 
-s_param = ['S11', 'S21'] 
+s_param = ['S11', 'S21']
 
 # Display numbers
 window_num  = 1
@@ -33,7 +40,7 @@ trace_num   = 2
 date_time = str(time.strftime("%d%m_%H%M%S"))
 
 # Setting file name to VNAdata_date_time
-file_name = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata" 
+file_name = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata"
 file_path = '%s_%s.csv' % (file_name, date_time)
 
 file_type   = 'CSV Formatted Data'
@@ -77,7 +84,7 @@ for s in range(len(s_param)):
     vna.meas_create(PNA, meas_names[s], s_param[s])
     vna.meas_feed(PNA, meas_names[s], window_num, trace_num)
     trace_num += 1
-    
+
 #meas_name = 'meas_%s_%s' % (s, date_time)
 #vna.meas_create(PNA, meas_name, s)
 #vna.meas_feed(PNA, meas_name, window_num, trace_num)
@@ -109,7 +116,7 @@ time.sleep(3) #asynchronous programming would be better
 #time.sleep(4) #asynchronous programming would be better
 
 ## Get the data from all measurements
-data = np.zeros((len(meas_names), num_points)) 
+data = np.zeros((len(meas_names), num_points))
 
 t = time.time()
 elapsed = np.ones(len(meas_names))
@@ -122,7 +129,7 @@ time.sleep(2)
 
 ## Error correction
 # Does not work if two -200 values are adjacent
-for i in range(len(data[:, 0])):   
+for i in range(len(data[:, 0])):
     for j in range(len(data[i])):
         if data[i,j] == -200:
             average = (data[i,j-1] + data[i,j+1]) / 2
@@ -152,7 +159,7 @@ fs = np.linspace(f_start, f_stop, num_points)
 # Plot the data
 for i in range(len(data[:,0])):
     plt.plot(fs, data[i])
-    
+
 # Format the figures
 plt.axis([min(fs), max(fs), np.min(data), 0]) # Sets origin in upper-left corner
 plt.grid()
