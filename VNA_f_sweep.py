@@ -40,6 +40,9 @@ for s in s_param:
 window_num  = 1
 trace_num   = 2
 
+# Error correction
+error_correction = 0
+
 ## Data storage parameters
 
 date_time = str(time.strftime("%y%m%d_%H%M%S"))
@@ -135,13 +138,22 @@ for m in range(len(meas_names)):
 
 ## Error correction
 # Does not work if two -200 values are adjacent
-for i in range(len(data[:, 0])):
-    for j in range(len(data[i])):
-        if data[i,j] == -200:
-            average = (data[i,j-1] + data[i,j+1]) / 2
-            data[i,j] = average
 
+if (error_correction == 1):
+    for i in range(len(data[:, 0])):
+        for j in range(len(data[i])):
+            if data[i,j] == -200:
+                average = (data[i,j-1] + data[i,j+1]) / 2
+                data[i,j] = average
 
+elapsed_time = elapsed[-1] - t
+elapsed = np.append(elapsed, elapsed_time)
+
+data_name = file_name + '.npy'
+np.save(data_name, data)
+
+elapsed_time = elapsed[-1] - t
+elapsed = np.append(elapsed, elapsed_time)
 # =============================================================================
 # %%
 # Reset VNA
