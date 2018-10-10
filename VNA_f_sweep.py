@@ -132,7 +132,7 @@ time.sleep(3) #asynchronous programming would be better
 # =============================================================================
 
 ### Store the data locally on the VNA
-#vna.save_local(PNA, file_path, file_type, scope, file_format, selector)
+#vna.save_local(PNA, file, file_type, scope, file_format, selector)
 #time.sleep(4) #asynchronous programming would be better
 
 ## Get the data from all measurements
