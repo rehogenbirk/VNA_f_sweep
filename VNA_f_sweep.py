@@ -21,15 +21,16 @@ import vna_functions as vna
 
 ## Measurement settings
 f_unit  = 'MHZ'
-f_start = 100   # in f_unit
-f_stop  = 67000 # in f_unit
+f_start = 4000   # in f_unit
+f_stop  = 6000 # in f_unit
 
-num_points  = 8001 # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
+num_points  = 'MAX' # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
 
 A_unit      = 'DBM'
 amplitude   = -50
 
-s_param = ['S11', 'S21']
+s_param = ['S11', 'S21', 'S22']
+#s_param = ['S21']
 
 # Display numbers
 window_num  = 1
@@ -66,7 +67,7 @@ if type(num_points) == str:
 ## Make contact with the VNA and initialise it
 rm = visa.ResourceManager()
 PNA = vna.connect('GPIB0::16::INSTR')
-vna.reset(PNA)
+vna.reset(PNA) 
 vna.clear(PNA)
 
 
@@ -122,10 +123,10 @@ t = time.time()
 elapsed = np.ones(len(meas_names))
 
 for m in range(len(meas_names)):
-    data[m] = vna.get_meas_data(PNA, meas_names[m]) # very slow (~3 min)
+    data[m] = vna.get_meas_data(PNA, meas_names[m]) # very slow (~3 min) for max num_points
     elapsed[m] = time.time() - t
 
-time.sleep(2)
+#time.sleep(2)
 
 ## Error correction
 # Does not work if two -200 values are adjacent
