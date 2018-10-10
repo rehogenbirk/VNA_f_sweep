@@ -38,7 +38,7 @@ trace_num   = 2
 
 ## Data storage parameters
 
-date_time = str(time.strftime("%d%m_%H%M%S"))
+date_time = str(time.strftime("%y%m%d_%H%M%S"))
 
 # Setting file name to VNAdata_date_time
 file_name = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata"
