@@ -156,14 +156,8 @@ if (error_correction == 1):
                 average = (data[i,j-1] + data[i,j+1]) / 2
                 data[i,j] = average
 
-elapsed_time = elapsed[-1] - t
-elapsed = np.append(elapsed, elapsed_time)
-
 data_name = file_name + '.npy'
 np.save(data_name, data)
-
-elapsed_time = elapsed[-1] - t
-elapsed = np.append(elapsed, elapsed_time)
 # =============================================================================
 # %%
 # Reset VNA
