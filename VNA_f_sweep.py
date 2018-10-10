@@ -33,6 +33,9 @@ s_param = ['S11', 'S21', 'S22']
 #s_param = ['S21']
 
 s_param_str = ''
+for s in s_param:
+    s_param_str += s
+
 # Display numbers
 window_num  = 1
 trace_num   = 2
@@ -42,8 +45,9 @@ trace_num   = 2
 date_time = str(time.strftime("%y%m%d_%H%M%S"))
 
 # Setting file name to VNAdata_date_time
-file_name = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata"
-file_path = '%s_%s.csv' % (file_name, date_time)
+file_path   = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata"
+file_name   = '%s_%s.csv' % (s_param_str, date_time)
+file        = file_path + file_name
 
 file_type   = 'CSV Formatted Data'
 scope       = 'Displayed'
