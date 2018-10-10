@@ -106,6 +106,17 @@ vna.set_Df_sweep(PNA, f_start, f_stop, f_unit)
 vna.set_num_points(PNA, num_points)
 num_points = int(vna.get_num_points(PNA)) # gets number of points in case num_points was a string
 
+
+
+# Set IF bandwidth (low makes measurement very slow, 2000 Hz is reasonable)
+PNA.write(':SENSe%s:BANDwidth:RESolution %G HZ' % (window_num, 1000.0))
+
+#time.sleep(3) # Need to wait before one sweep is done before autoscalng can occur, as initially all values are at -200 dB
+#
+## Autoscale y-axis
+#PNA.write(':DISPlay:WINDow:TRACe%s:Y:AUTO' % (trace_num))
+#PNA.write(':SENSe%s:BANDwidth:RESolution %G Hz' % (window_num, 100.0))
+
 # =============================================================================
 # %%
 # Perform measurement
