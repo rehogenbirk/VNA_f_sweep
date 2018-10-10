@@ -24,7 +24,7 @@ f_unit  = 'MHZ'
 f_start = 4000   # in f_unit
 f_stop  = 6000 # in f_unit
 
-num_points  = 'MAX' # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
+num_points  = 8001 # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
 
 A_unit      = 'DBM'
 amplitude   = -50
@@ -41,7 +41,7 @@ window_num  = 1
 trace_num   = 2
 
 # Error correction
-error_correction = 0
+error_correction = 1
 
 ## Data storage parameters
 
@@ -108,7 +108,7 @@ num_points = int(vna.get_num_points(PNA)) # gets number of points in case num_po
 
 
 # Set IF bandwidth (low makes measurement very slow, 2000 Hz is reasonable)
-PNA.write(':SENSe%s:BANDwidth:RESolution %G HZ' % (window_num, 1000.0))
+#PNA.write(':SENSe%s:BANDwidth:RESolution %G HZ' % (window_num, 1000.0))
 
 #time.sleep(3) # Need to wait before one sweep is done before autoscalng can occur, as initially all values are at -200 dB
 #
