@@ -101,7 +101,8 @@ def save_local(instrument, file_path, file_type='CSV Formatted Data', scope='Aut
 # =============================================================================
 
 def get_meas_data(instrument, meas_name, channel_num=1):
-    instrument.write(':CALCulate%d:PARameter:SELect "%s"' % (channel_num, meas_name))
+    command = ':CALCulate%d:PARameter:SELect "%s"' % (channel_num, meas_name)
+    instrument.write(command)
     data = instrument.query_ascii_values(':CALCulate:DATA? %s' % ('FDATA'))
     return data
 
