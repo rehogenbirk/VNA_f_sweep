@@ -32,6 +32,7 @@ amplitude   = -50
 s_param = ['S11', 'S21', 'S22']
 #s_param = ['S21']
 
+s_param_str = ''
 # Display numbers
 window_num  = 1
 trace_num   = 2
