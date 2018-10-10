@@ -78,7 +78,6 @@ PNA = vna.connect('GPIB0::16::INSTR')
 vna.reset(PNA) 
 vna.clear(PNA)
 
-
 # Close all measurements
 vna.meas_close_all(PNA)
 
@@ -89,10 +88,10 @@ vna.display_window(PNA, window_num, 'ON') # leads to VNA error when window is al
 meas_names = []
 
 for s in range(len(s_param)):
+    trace_num += 1
     meas_names.append('meas_%s' % (s_param[s]))
     vna.meas_create(PNA, meas_names[s], s_param[s])
     vna.meas_feed(PNA, meas_names[s], window_num, trace_num)
-    trace_num += 1
 
 #meas_name = 'meas_%s_%s' % (s, date_time)
 #vna.meas_create(PNA, meas_name, s)
