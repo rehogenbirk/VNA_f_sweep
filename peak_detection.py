@@ -33,16 +33,20 @@ def derivative2(xs, ys):
     der2 = derivative(xs[1:], der1)
     return der2
 
-der_y   = derivative(xs, ys)
-der2_y  = derivative2(xs, ys)
+der_y = np.zeros([len(xs), 2])
+
+der_y[:, 0]   = derivative(xs, ys)
+der_y[:, 1]  = derivative2(xs, ys)
 
 #der_y = np.insert(der_y, 0, 0) # Inserts a zero at the start
 
-#plt.plot(xs[1:], der_y)
-plt.plot(xs[2:], der2_y)
+plt.figure(2)
+
+plt.plot(xs[1:], der_y[0])
+plt.plot(xs[2:], der_y[1])
 
 # Format the figures
-plt.axis([min(xs[2:]), max(xs[2:]), min(der_y), max(der2_y)]) # Sets origin in upper-left corner
+plt.axis([np.min(xs[2:]), np.max(xs[2:]), np.min(der_y), np.max(der_y)]) # Sets origin in upper-left corner
 plt.grid()
 #plt.xlabel('Frequency (%s)' % (f_unit))
 #plt.ylabel('Magnitude (%s)' % ('dB'))
