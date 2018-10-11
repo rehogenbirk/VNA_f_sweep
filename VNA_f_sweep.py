@@ -22,6 +22,7 @@ import visa
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 import vna_functions as vna
 # =============================================================================
@@ -103,6 +104,13 @@ vna.clear(PNA)
 # Close all measurements
 vna.meas_close_all(PNA)
 
+print('MESSAGE: VNA initialised')
+
+# =============================================================================
+# %%
+# Measurement setup
+# =============================================================================
+
 ## Create window and display measurement in it
 vna.display_window(PNA, window_num, 'ON') # leads to VNA error when window is already open, but the error is harmless
 
@@ -138,14 +146,19 @@ num_points = int(vna.get_num_points(PNA)) # gets number of points in case num_po
 #PNA.write(':DISPlay:WINDow:TRACe%s:Y:AUTO' % (trace_num))
 #PNA.write(':SENSe%s:BANDwidth:RESolution %G Hz' % (window_num, 100.0))
 
+print('MESSAGE: Measurement setup complete')
+
 # =============================================================================
 # %%
 # Perform measurement
 # =============================================================================
 
 ## Start measurement and wait 3 seconds to let the measurement finish
-vna.meas_start(PNA)
-time.sleep(3) #asynchronous programming would be better
+vna.meas_start(PNA) # Is this necessary?
+
+#time.sleep(3) #asynchronous programming would be better
+
+print('MESSAGE: Measurement on')
 
 # =============================================================================
 # %%
@@ -190,6 +203,8 @@ vna.reset(PNA)
 PNA.close()
 rm.close()
 
+print('MESSAGE: VNA reset and session closed')
+
 # =============================================================================
 # %%
 # Plot data
@@ -209,3 +224,5 @@ plt.axis([min(fs), max(fs), np.min(data), 0]) # Sets origin in upper-left corner
 plt.grid()
 plt.xlabel('Frequency (%s)' % (f_unit))
 plt.ylabel('Magnitude (%s)' % ('dB'))
+
+print('MESSAGE: Data plotted')
