@@ -42,16 +42,19 @@ for s in s_param:
 window_num  = 1
 trace_num   = 2
 
-# Error correction
-error_correction = 1
+## Controls
+error_correction    = 1
+save_data           = 1
+plot                = 1
+close_session       = 0
 
 ## Data storage parameters
 
 date_time = str(time.strftime("%y%m%d_%H%M%S"))
 
 # Setting file name to VNAdata_date_time
-file_path   = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\VNAdata"
-file_name   = '%s_%s.csv' % (s_param_str, date_time)
+file_path   = "C:\\Documents and Settings\\Administrator\\Desktop\\Rijk\\"
+file_name   = 'VNAdata%s_%s' % (s_param_str, date_time)
 file        = file_path + file_name
 
 file_type   = 'CSV Formatted Data'
@@ -59,19 +62,26 @@ scope       = 'Displayed'
 file_format = 'Displayed'
 selector    = 1
 
-# In case num_points is a string, for the next step, it needs to be converted to a number
-if type(num_points) == str:
-    if num_points[0:3].upper() == 'MAX':
-        num_points = 32001 # Maximum number of points possible on current VNA
-    elif num_points[0:3].upper() == 'MIN':
-        num_points = 1 # Minimum number of points possible on current VNA
-    else:
-        print('num_points has been assigned an incorrect string, please try again')
+## Error checking and turning strings into numbers
 
+if num_points_set > 32001:
+    sys.exit('num_points is larger than the maximum amount possible')
+
+if IF_bandwidth_set not in [1, 2, 3, 5, 7, 10, 15, 20, 30, 50, 70, 100, 150, 200, 300, 500, 700, 1e3, 1.5e3, 2e3, 5e3, 7e3, 10e3, 5e3, 20e3, 30e3, 35e3, 40e3]:
+    sys.exit('IF_bandwidth is not set to any of the allowed values')
+
+# In case num_points is a string, for the next step, it needs to be converted to a number
+if type(num_points_set) == str:
+    if num_points_set[0:3].upper() == 'MAX':
+        num_points_set = 32001 # Maximum number of points possible on current VNA
+    elif num_points_set[0:3].upper() == 'MIN':
+        num_points_set = 1 # Minimum number of points possible on current VNA
+    else:
+        sys.exit('num_points has been assigned an incorrect string, please try again')
 
 # =============================================================================
 # %%
-#Setup measurement
+# Initialisation
 # =============================================================================
 
 ## Make contact with the VNA and initialise it
