@@ -121,7 +121,7 @@ for s in range(len(s_param)):
     trace_num += 1
     meas_names.append('meas_%s' % (s_param[s]))
     vna.meas_create(PNA, meas_names[s], s_param[s])
-    vna.meas_feed(PNA, meas_names[s], window_num, trace_num)
+    vna.meas_show(PNA, meas_names[s], window_num, trace_num)
 
 #meas_name = 'meas_%s_%s' % (s, date_time)
 #vna.meas_create(PNA, meas_name, s)
@@ -131,14 +131,18 @@ for s in range(len(s_param)):
 vna.set_amplitude(PNA, amplitude, A_unit)
 
 ## Setup measurement parameters
-vna.set_Df_sweep(PNA, f_start, f_stop, f_unit)
-vna.set_num_points(PNA, num_points)
-num_points = int(vna.get_num_points(PNA)) # gets number of points in case num_points was a string
+#vna.set_Df_sweep(PNA, f_start, f_stop, f_unit)
+vna.set_f_start(PNA, f_start, f_unit)
+vna.set_f_stop(PNA, f_stop, f_unit)
+
+vna.set_num_points(PNA, num_points_set)
+num_points_actual = int(vna.get_num_points(PNA)) # gets number of points in case num_points was a string
 
 
 
 # Set IF bandwidth (low makes measurement very slow, 2000 Hz is reasonable)
-#PNA.write(':SENSe%s:BANDwidth:RESolution %G HZ' % (window_num, 1000.0))
+vna.set_if_bandwidth(PNA, IF_bandwidth_set, window_num)
+IF_bandwidth_actual = vna.get_if_bandwidth(PNA)
 
 #time.sleep(3) # Need to wait before one sweep is done before autoscalng can occur, as initially all values are at -200 dB
 #
