@@ -170,42 +170,52 @@ print('MESSAGE: Measurement on')
 # =============================================================================
 
 ### Store the data locally on the VNA
-#vna.save_local(PNA, file, file_type, scope, file_format, selector)
+#vna.save_local(PNA, str(file+ '.csv'), file_type, scope, file_format, selector)
 #time.sleep(4) #asynchronous programming would be better
 
 ## Get the data from all measurements
-data = np.zeros((len(meas_names), num_points))
+data = np.zeros((len(meas_names), num_points_actual))
 
-t = time.time()
-elapsed = np.ones(len(meas_names))
+elapsed         = np.zeros(len(meas_names))
+meas_time       = np.zeros(len(meas_names)+1)
+meas_time[0]    = time.time()
 
 for m in range(len(meas_names)):
     data[m] = vna.get_meas_data(PNA, meas_names[m]) # very slow (~3 min) for max num_points
-    elapsed[m] = time.time() - t
-
-#time.sleep(2)
+    meas_time[m+1] = time.time()
+    elapsed[m] = meas_time[m+1]-meas_time[m]
 
 ## Error correction
 # Does not work if two -200 values are adjacent
-
-if (error_correction == 1):
+if error_correction:
     for i in range(len(data[:, 0])):
-        for j in range(len(data[i])):
+        for j in range(len(data[i])-1):
             if data[i,j] == -200:
                 average = (data[i,j-1] + data[i,j+1]) / 2
                 data[i,j] = average
 
-data_name = file_name + '.npy'
-np.save(data_name, data)
+fs      = np.linspace(f_start, f_stop, num_points_actual) # Create x-axis (as none are gotten from get_meas_data)
+
+if save_data:
+    saved_data = np.vstack((fs, data))
+    
+    data_name = file_name + '.csv'
+    np.savetxt(data_name, saved_data, delimiter=',')
+    
+# perhaps use strutured arrays
+# https://docs.scipy.org/doc/numpy/user/basics.rec.html
+    
+print('MESSAGE: Measurement complete and data saved')
 # =============================================================================
 # %%
 # Reset VNA
 # =============================================================================
-
 ## Wipe the settings and terminate the session
-vna.reset(PNA)
-PNA.close()
-rm.close()
+    
+if close_session:
+    vna.reset(PNA)
+    PNA.close()
+    rm.close()
 
 print('MESSAGE: VNA reset and session closed')
 
@@ -213,20 +223,21 @@ print('MESSAGE: VNA reset and session closed')
 # %%
 # Plot data
 # =============================================================================
-plt.close('all') # Closes all open figures
 
-# Create x-axis (as none are gotten from get_meas_data)
-fs = np.linspace(f_start, f_stop, num_points)
-
-
-# Plot the data
-for i in range(len(data[:,0])):
-    plt.plot(fs, data[i])
-
-# Format the figures
-plt.axis([min(fs), max(fs), np.min(data), 0]) # Sets origin in upper-left corner
-plt.grid()
-plt.xlabel('Frequency (%s)' % (f_unit))
-plt.ylabel('Magnitude (%s)' % ('dB'))
+if plot:
+    plt.close('all') # Closes all open figures   
+    
+    # Plot the data
+    for i in range(len(data[:,0])):
+        plt.plot(fs, data[i])
+    
+    # Format the figures
+    plt.axis([min(fs), max(fs), np.floor(np.min(data)), np.ceil(np.max(data))]) # Sets origin in upper-left corner
+    plt.grid(True)
+    
+    plt.title('Frequency between %s and %s %s for %s num points and %s Hz IF bandwidth' % (f_start, f_stop, f_unit, num_points_actual, IF_bandwidth_actual))
+    plt.legend(s_param)
+    plt.xlabel('Frequency (%s)' % (f_unit))
+    plt.ylabel('Magnitude (%s)' % ('dB'))
 
 print('MESSAGE: Data plotted')
