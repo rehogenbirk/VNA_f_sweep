@@ -1,7 +1,7 @@
 # Gitignore file
 
 data/
-figures/
 __pycache__/
+test.csv
 
 vna/__pycache__/
