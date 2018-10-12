@@ -3,3 +3,5 @@
 data/
 figures/
 __pycache__/
+
+vna/__pycache__/
