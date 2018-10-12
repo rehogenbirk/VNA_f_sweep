@@ -1,0 +1,5 @@
+# Gitignore file
+
+data/
+figures/
+__pycache__/
