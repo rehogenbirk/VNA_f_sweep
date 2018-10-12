@@ -15,7 +15,7 @@ import os
 
 ## Parameters
 
-file_name = 'VNAdataS21S11S22_with_laser.csv'
+file_name = 'VNAdataS21_with_laser.csv'
 file_path = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data for Delft 181010'
 #file = file_path + file_name
 
@@ -26,11 +26,13 @@ f_unit = 'MHz'
 s_unit = 'dB'
 
 f       = 'f'
-s_param = ['S21', 'S11', 'S22']
+#s_param = ['S21', 'S11', 'S22']
+s_param = ['S21']
+IF_bandwidth = 200 # Hz
 
 ## Code
 
-IF_bandwidth    = input('What was the IF bandwidth for this data? (Hz)\n')
+#IF_bandwidth    = input('What was the IF bandwidth for this data? (Hz)\n')
 # Make these redundant by adding them to the saved data
 
 for s in s_param:
@@ -54,8 +56,12 @@ num_points  = len(data[0])
 #saving_data[:,1] = units
 #saving_data[:,1:] = saved_data
     
-#data_name = 'test' + '.csv'
-#np.savetxt(data_name, saving_data, delimiter=',')
+# Transposing data
+saving_data = np.zeros((saved_data.T.shape[0]-1, saved_data.T.shape[1] + 1))
+saving_data[:, :saved_data.T.shape[1]] = saved_data.T[1:,:]
+
+data_name = 'test' + '.csv'
+np.savetxt(data_name, saving_data, delimiter=',')
 
 
 ## Plotting
@@ -65,7 +71,8 @@ for i in range(len(data[:,0])):
     plt.plot(fs, data[i])
 
 # Format the figures
-plt.axis([min(fs), max(fs), -40, 0]) # Sets origin in upper-left corner
+plt.axis([min(fs), max(fs), -10, -5]) # Sets origin in upper-left corner
+#plt.axis([min(fs), max(fs), -40, 0]) # Sets origin in upper-left corner
 plt.grid(True)
 
 plt.title('Frequency between %s and %s %s for %s num points and %s Hz IF bandwidth' % (f_start, f_stop, f_unit, num_points, IF_bandwidth))
