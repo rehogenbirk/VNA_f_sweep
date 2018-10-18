@@ -33,17 +33,18 @@ import vna_functions as vna
 ## Measurement settings
 f_unit  = 'MHZ'
 f_start = 100   # in f_unit
-f_stop  = 10000     # in f_unit
+f_stop  = 67000     # in f_unit
 
-num_points_set      = 8001 # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
-IF_bandwidth_set    = 2000 # Hz
+num_points_set      = 201 # MAX is 32001 points, 8001 is chosen as otherwise the acquisition is very slow
+IF_bandwidth_set    = 35000 # Hz
 
 
 A_unit      = 'DBM'
-amplitude   = -50
+amplitude   = -17
 
 #s_param = ['S21', 'S11', 'S22']
-s_param = ['S21']
+#s_param = ['S21']
+s_param = ['S11']
 
 s_param_str = ''
 for s in s_param:
