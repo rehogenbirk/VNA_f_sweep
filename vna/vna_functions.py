@@ -67,7 +67,7 @@ def meas_create(instrument, meas_name, s_parameters, channel_num=1):
     instrument.write(command)
     
 def meas_show(instrument, meas_name, window_num=1, trace_num=9):
-    """Feeds the measuremnt to a window as a numbered trace, so it's displayed there"""
+    """Shows the measuremnt to a window as a numbered trace, so it's displayed there"""
     command = ':DISPlay:WINDow%d:TRACe%d:FEED "%s"' % (window_num, trace_num, meas_name)
     instrument.write(command)
     
@@ -85,12 +85,12 @@ def set_amplitude(instrument, amplitude, unit='DBM', channel_num=1):
     command = ':SOURce%d:POWer:LEVel:IMMediate:AMPLitude %G %s' % (channel_num, amplitude, unit)
     instrument.write(command)
     
-#def set_Df_sweep(instrument, f_start, f_stop, unit='MHZ', channel_num=1):
-#    """Sets start and stop frequency of sweep of channel"""
-#    command1 = ':SENSe%d:FREQuency:STARt %G %s' % (channel_num, f_start, unit)
-#    command2 = ':SENSe%d:FREQuency:STOP %G %s' % (channel_num, f_stop, unit)
-#    instrument.write(command1)
-#    instrument.write(command2)
+def set_Df_sweep(instrument, f_start, f_stop, unit='MHZ', channel_num=1):
+    """Sets start and stop frequency of sweep of channel"""
+    command1 = ':SENSe%d:FREQuency:STARt %G %s' % (channel_num, f_start, unit)
+    command2 = ':SENSe%d:FREQuency:STOP %G %s' % (channel_num, f_stop, unit)
+    instrument.write(command1)
+    instrument.write(command2)
     
 def set_f_start(instrument, f_start, unit='MHZ', channel_num=1):
     """Sets start frequency of sweep of channel"""
