@@ -142,9 +142,15 @@ def get_meas_data(instrument, meas_name, channel_num=1):
     data = instrument.query_ascii_values(':CALCulate:DATA? %s' % ('FDATA'))
     return data
 
+def get_Df(instrument):
+    """Queries for start and stop frequencies"""
+    f_start     = instrument.query_ascii_values(':SENSe:FREQuency:STARt?')[0]
+    f_stop      = instrument.query_ascii_values(':SENSe:FREQuency:STOP?')[0]
+    return f_start, f_stop
+
 def get_num_points(instrument):
     command = ':SENSe:SWEep:POINts?'
-    num_points = instrument.query_ascii_values(command)[0]
+    num_points = int(instrument.query_ascii_values(command)[0])
     return num_points
 
 def get_if_bandwidth(instrument):
@@ -152,12 +158,36 @@ def get_if_bandwidth(instrument):
     if_bandwidth = instrument.query_ascii_values(command)[0]
     return if_bandwidth
 
+def get_meas_names(instrument):
+    """Queries for all current measurement names"""
+    command = ':CALCulate:PARameter:CATalog:EXTended?'
+    names = instrument.query(command)
+    meas_names = parse(names)[::2] 
+    # Gets every other item as names also contains the s-parameter 
+    # connected to the meas_name
+    return meas_names
 
 
+def get_cal_sets(instrument):
+    """"Queries instrument for available calibration sets"""
+    calsets = instrument.query(':SENSe:CORRection:CSET:CATalog? %s' % ('NAME'))
+    return calsets
 
+# =============================================================================
+# Other
+# =============================================================================
 
-
-
-
+def parse(text, delimiter=','):
+    """Did not quickly find a parser, so made one specifically for get_meas_names"""
+    word_list = []
+    word = ''
+    for i in text:
+        if i != delimiter and i != '"':
+            word = word + i
+        if i == delimiter or i == text[-2]:
+            word_list.append(word)
+            word = ''
+    word_list = word_list[1:]
+    return word_list
 
 
