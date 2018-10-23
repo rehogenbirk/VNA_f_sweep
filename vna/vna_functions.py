@@ -112,6 +112,22 @@ def set_if_bandwidth(instrument, if_bandwidth, window_num=1, channel_num=1):
     command = ':SENSe%s:BANDwidth:RESolution %G HZ' % (window_num, if_bandwidth)
     instrument.write(command)
     
+# =============================================================================
+# Calibration
+# =============================================================================    
+    
+def cal_load(instrument, cal_name):
+    calsets = get_cal_sets(instrument)
+    if cal_name not in calsets:
+        sys.exit('Calibration set %s not found' % (cal_name)) 
+    else:
+        command = ':SENSe:CORRection:CSET:ACTivate "%s",%d' % (cal_name, 1)
+        instrument.write(command)
+
+# =============================================================================
+# Saving files
+# =============================================================================
+    
 def save_local(instrument, file_path, file_type='CSV Formatted Data', scope='Auto', file_format='Displayed', selector=1):
     command = ':MMEMory:STORe:DATA "%s","%s","%s","%s",%d' % (file_path, file_type, scope, file_format, selector)
     instrument.write(command)
