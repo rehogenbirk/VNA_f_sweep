@@ -17,6 +17,7 @@ COMMENTS
 
 import visa
 import time
+import sys
 
 #channel_num = 1
 
@@ -46,8 +47,12 @@ def display_window(instrument, window_num=1, status='ON'):
     if window_num != 1:
         command = ':DISPlay:WINDow%d:STATe %s' % (window_num, status)
         instrument.write(command)
+        
+def autoscale(instrument, trace_num):
+    """Performs autoscaling for a single trace"""
+    command = ':DISPlay:WINDow:TRACe%s:Y:AUTO' % (trace_num)
+    instrument.write(command)
     
-
 # =============================================================================
 # Control measurements
 # =============================================================================
