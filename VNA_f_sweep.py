@@ -29,7 +29,7 @@ import vna_functions as vna
 # ## Input parameters
 # =============================================================================
 
-file_name       = 'VNAdataBK7'
+file_name       = 'calibration_11_7K'
 
 #f_start         = 100      # MHz
 #f_stop          = 10000    # MHz
