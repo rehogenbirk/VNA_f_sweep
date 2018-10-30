@@ -13,6 +13,7 @@ import time
 import vna_functions as vna
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 ## Stub for putting in measurement parameters
 
@@ -183,8 +184,11 @@ def save_data(instrument, file_name, data, s_param):
         
     # perhaps use strutured arrays
     # https://docs.scipy.org/doc/numpy/user/basics.rec.html
-        
-    print('MESSAGE: Measurement data saved')
+    
+    cwd = os.getcwd()
+    print(cwd)
+    
+    print('MESSAGE: Measurement data saved in: \n%s' % (cwd))
     
 def plot_data(data, s_param, num_points, IF_bandwidth, only_S21=0):   
     
