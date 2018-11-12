@@ -29,15 +29,25 @@ def init():
     ## Make contact with the VNA and initialise it
     rm = visa.ResourceManager()
     PNA = vna.connect('GPIB0::16::INSTR')
+    
+    # Set timeout of PNA to prevent timeout errors (1e4, = 10 s, works)
+    PNA.timeout     = 1e4
+    
+    print('MESSAGE: VNA initialised')
+    
+    return PNA, rm
+
+def reset(PNA):
     vna.reset(PNA) 
     vna.clear(PNA)
+    
+    # Set timeout of PNA to prevent timeout errors (1e4, = 10 s, works)
+    PNA.timeout     = 1e4
     
     # Close all measurements
     vna.meas_close_all(PNA)
     
-    print('MESSAGE: VNA initialised')
-    bla = PNA
-    return bla, rm
+    print('MESSAGE: VNA reset')
 
 def close(instrument, rm):
     """Wipes the instrument settings and terminates the session"""
