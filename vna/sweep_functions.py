@@ -138,7 +138,8 @@ def standard_sweep(instrument):
     
 
 
-def get_data(instrument, error_correction=1):
+
+def get_data(instrument, data_type='SDATA', error_correction=1):
     """Get the data from all measurements and time measurements took"""
     # Query for necessary data
     num_points      = vna.get_num_points(instrument)
@@ -146,14 +147,23 @@ def get_data(instrument, error_correction=1):
     meas_names      = vna.get_meas_names(instrument)
     
     # Intialise data array
-    data = np.zeros((len(meas_names), num_points))
+    if data_type == 'SDATA':
+        data = np.zeros((len(meas_names)*2, num_points))
+    else:
+        data = np.zeros((len(meas_names), num_points))
     
+    # Setup for measurement time calculation
     elapsed         = np.zeros(len(meas_names))
     meas_time       = np.zeros(len(meas_names)+1)
     meas_time[0]    = time.time()
     
+    print('Measurement started at: ' + time.strftime("%H%M%S"))
+    
+    # Query for data and record time it took
     for m in range(len(meas_names)):
-        data[m]         = vna.get_meas_data(instrument, meas_names[m]) # very slow (~3 min) for max num_points or small IF bandwidth
+        n = 2*m
+        data[n:n+2]         = vna.get_meas_data(instrument, meas_names[m], data_type)
+        
         meas_time[m+1]  = time.time()
         elapsed[m]      = meas_time[m+1] - meas_time[m]
         print('MESSAGE: %s measurement done' % (meas_names[m]))
