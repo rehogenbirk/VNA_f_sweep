@@ -202,26 +202,50 @@ def save_data(instrument, file_name, data, s_param):
     for s in s_param:
         s_param_str += s
     
-    file_name2   = '%s_%s_%s' % (file_name, s_param_str, date_time)
+    full_file_name   = '%s_%s_%s' % (file_name, s_param_str, date_time)
     
-    data_name = file_name2 + '.csv'
+    data_name = full_file_name + '.csv'
     np.savetxt(data_name, data, delimiter=',')
         
     # perhaps use strutured arrays
     # https://docs.scipy.org/doc/numpy/user/basics.rec.html
     
     cwd = os.getcwd()
-    print(cwd)
-    
     print('MESSAGE: Measurement data saved in: \n%s' % (cwd))
+    print('as: %s' % (full_file_name))
     
-def plot_data(data, s_param, num_points, IF_bandwidth, only_S21=0):   
+    return full_file_name
+    
+    
+
+
+def save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth, amplitude):
+    f   = open(full_file_name + '_parameters.txt', 'w+')
+    
+    f.write('Temperature is %s K \n' % (T))
+    f.write('f_start is %s Hz \n' % (f_start))  
+    f.write('f_stop is %s Hz \n' % (f_stop))
+    f.write('num_points is %s \n' % (num_points))
+    f.write('IF bandwidth is %s Hz \n' % (IF_bandwidth))
+    f.write('Amplitude is %s dBm \n' % (amplitude))
+
+    f.close()
+    
+    print('MESSAGE: Parameter file is saved')
+    
+    
+    
+    
+def plot_fdata(data, s_param, IF_bandwidth, only_S21=0):   
+    """Plot magnitude data (FDATA)"""
     
     # Get x-axis
     fs = data[0,:]
     # Get stop and start frequency
     f_start = int(min(fs)*1e-6)
     f_stop  = int(max(fs)*1e-6)
+    
+    num_points  = len(fs)
     
     # Separate S-parameter data from the rest
     ydata = data[1:,:]
