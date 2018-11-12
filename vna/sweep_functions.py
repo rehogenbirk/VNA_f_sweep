@@ -227,8 +227,127 @@ def plot_data(data, s_param, num_points, IF_bandwidth, only_S21=0):
         
         plt.title('Frequency between %s and %s %s for %s num points and %s Hz IF bandwidth' % (f_start, f_stop, 'MHz', num_points, IF_bandwidth))
         plt.legend(s_param)
-        plt.xlabel('Frequency (%s)' % ('MHz'))
+        plt.xlabel('Frequency (%s)' % ('Hz'))
         plt.ylabel('Magnitude (%s)' % ('dB'))
     
+    print('MESSAGE: Data plotted')
+    
+    
+    
+    
+def plot_sdata(data, s_param, IF_bandwidth, only_S21=0):   
+    """Plot function for complex data (SDATA)"""
+    
+    # Get x-axis
+    fs = data[0,:]
+#    # Get stop and start frequency
+#    f_start = int(min(fs)*1e-6)
+#    f_stop  = int(max(fs)*1e-6)
+    
+    num_points  = len(fs)
+    
+    # Separate S-parameter data from the rest
+    ydata = data[1:,:]
+    
+    ### Plotting
+    
+    # Only plot S21
+    if only_S21:
+        plt.plot(fs, ydata[1,:])
+        plt.plot(fs, ydata[2,:])
+        
+        # Format the figures
+        plt.axis([min(fs), max(fs), np.floor(np.min(ydata[1,:])), np.ceil(np.max(ydata[1,:]))]) 
+        plt.grid(True)
+        
+        plt.legend(['Real(S21)', 'Imag(S21)'])
+        
+        ## Plot all the S-parameters
+    else:
+        
+        # Checks if the right number of s_parameters is given
+        if len(s_param) != (len(ydata[:]) /2 ):
+            sys.exit('Number of S-parameters in s_param does not match with given data')
+        ## Actual plotting
+        for i in range(len(s_param)):
+            plt.plot(fs, ydata[2*i,:])
+            plt.plot(fs, ydata[2*i + 1,:])
+        
+        ## Format the figures
+        plt.axis([min(fs), max(fs), np.floor(np.min(ydata)), np.ceil(np.max(ydata))]) # Sets origin in upper-left corner
+        plt.grid(True)
+
+        # Creating legend text and setting it
+        legend_text     = [''] * 2*len(s_param)
+        for s in range(len(s_param)):
+            legend_text[2*s]    = 'Real(%s)' % (s_param[s])
+            legend_text[2*s+1]  = 'Imag(%s)' % (s_param[s])
+        
+        plt.legend(legend_text)
+    
+    plt.title('S-parameters for %s num points and %s Hz IF bandwidth' % (num_points, IF_bandwidth))
+    plt.xlabel('Frequency (%s)' % ('Hz'))
+    plt.ylabel('Relative Amplitude')
+    
+    print('MESSAGE: Data plotted')
+
+
+
+
+def plot_sdata_mag(data, s_param, IF_bandwidth, only_S21=0):   
+    """Plots magnitude of complex data (SDATA)"""
+    
+    # Get x-axis
+    fs = data[0,:]
+#    # Get stop and start frequency
+#    f_start = int(min(fs)*1e-6)
+#    f_stop  = int(max(fs)*1e-6)
+    
+    num_points  = len(fs)
+    
+    # Separate S-parameter data from the rest
+    ydata = data[1:,:]
+    
+    # Calculate magnitude from complex data
+    data_mag    = np.zeros([ int(len(ydata[:,0]) /2), len(ydata[0,:]) ])
+    
+    for i in range(len(data_mag[:,0])):
+        for j in range(len(data_mag[0,:])):
+            data_mag[i, j]  = np.sqrt(ydata[2*i,j]**2 + ydata[2*i+1, j]**2)
+    data_mag        = 20 * np.log10(data_mag)
+    
+    ### Plotting
+    
+    # Only plot S21
+    if only_S21:
+        
+        # Actual plotting
+        plt.plot(fs, data_mag[0,:])
+        
+        # Format the figures
+        plt.axis([min(fs), max(fs), np.floor(np.min(data_mag[0,:])), np.ceil(np.max(data_mag[0,:]))]) 
+        plt.grid(True)
+        
+        plt.legend('S21')
+        
+    ## Plot all the S-parameters
+    else:
+        
+        # Checks if the right number of s_parameters is given
+        if len(s_param) != (len(ydata[:]) /2 ):
+            sys.exit('Number of S-parameters in s_param does not match with given data')
+        ## Actual plotting
+        for s in range(len(s_param)):
+            plt.plot(fs, data_mag[s,:])
+        
+        ## Format the figures
+        plt.axis([min(fs), max(fs), np.floor(np.min(data_mag)), np.ceil(np.max(data_mag))]) # Sets origin in upper-left corner
+        plt.grid(True)
+        
+        plt.legend(s_param)
+    
+    plt.title('S-parameters for %s num points and %s Hz IF bandwidth' % (num_points, IF_bandwidth))
+    plt.xlabel('Frequency (%s)' % ('Hz'))
+    plt.ylabel('Magnitude (dB)')
     
     print('MESSAGE: Data plotted')
