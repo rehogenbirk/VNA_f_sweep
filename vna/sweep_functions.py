@@ -56,6 +56,10 @@ def close(instrument, rm):
     rm.close()
     print('MESSAGE: VNA reset and session closed')
 
+
+
+
+
 def setup(instrument, f_start, f_stop, num_points, IF_bandwidth, 
           amplitude, s_param):
     """Sets measurement parameters on the VNA"""
@@ -124,6 +128,7 @@ def setup(instrument, f_start, f_stop, num_points, IF_bandwidth,
     print('MESSAGE: Measurement setup complete')
     return meas_names
     
+
 
 
 def standard_sweep(instrument):
