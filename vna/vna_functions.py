@@ -18,6 +18,7 @@ COMMENTS
 import visa
 import time
 import sys
+import numpy as np
 
 #channel_num = 1
 
@@ -136,10 +137,17 @@ def save_local(instrument, file_path, file_type='CSV Formatted Data', scope='Aut
 # Queries
 # =============================================================================
 
-def get_meas_data(instrument, meas_name, channel_num=1):
+def get_meas_data(instrument, meas_name, data_type='SDATA', channel_num=1):
+    """Queries measurement data and parses data if data is complex"""
     command = ':CALCulate%d:PARameter:SELect "%s"' % (channel_num, meas_name)
     instrument.write(command)
-    data = instrument.query_ascii_values(':CALCulate:DATA? %s' % ('FDATA'))
+    data = instrument.query_ascii_values(':CALCulate:DATA? %s' % (data_type))
+    
+    if data_type == 'SDATA':
+        data_real   = data[::2]
+        data_imag   = data[1::2]
+        data        = np.array([data_real, data_imag])
+        
     return data
 
 def get_Df(instrument):
