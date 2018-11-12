@@ -15,7 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-## Stub for putting in measurement parameters
+## Template for putting in measurement parameters
 
 #f_start         = 100      # MHz
 #f_stop          = 67000    # MHz
