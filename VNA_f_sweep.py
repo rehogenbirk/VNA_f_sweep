@@ -86,8 +86,7 @@ sweep.save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwid
 
 sweep.plot_sdata_mag(data, s_param, IF_bandwidth, amplitude, only_S21=0)
 
-plt.savefig(full_file_name + '.svg')
-print('MESSAGE: Plot saved')
+sweep.save_plot(full_file_name)
 
 #%%
 sweep.close(PNA, rm)
