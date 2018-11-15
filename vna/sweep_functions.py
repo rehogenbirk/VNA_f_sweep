@@ -419,7 +419,7 @@ def plot_sdata_mag(data, s_param, IF_bandwidth, amplitude, only_S21=0):
         
         plt.legend(s_param)
     
-    plt.title('S-parameters for %s num points, %s Hz IF bandwidth and %s dBm amplitude' % (num_points, IF_bandwidth, amplitude))
+    plt.title('S-parameters \n %s num points, %s Hz IF bandwidth and %s dBm amplitude' % (num_points, IF_bandwidth, amplitude))
     plt.xlabel('Frequency (%s)' % ('Hz'))
     plt.ylabel('Magnitude (dB)')
     
