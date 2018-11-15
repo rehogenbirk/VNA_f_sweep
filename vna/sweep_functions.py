@@ -14,6 +14,9 @@ import vna_functions as vna
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import pickle as pkl
+
+import data_analysis as dat
 
 ## Template for putting in measurement parameters
 
@@ -273,7 +276,7 @@ def plot_fdata(data, s_param, IF_bandwidth, only_S21=0):
     
     # Only plot S21
     if only_S21:
-        plt.plot(fs, ydata[1,:])
+        plt.plot(fs, ydata[0,:])
         
         # Format the figures
         plt.axis([min(fs), max(fs), np.floor(np.min(ydata[1,:])), np.ceil(np.max(ydata[1,:]))]) # Sets origin in upper-left corner
@@ -310,6 +313,8 @@ def plot_fdata(data, s_param, IF_bandwidth, only_S21=0):
     
 def plot_sdata(data, s_param, IF_bandwidth, only_S21=0):   
     """Plot function for complex data (SDATA)"""
+    plt.close('all')
+
     
     # Get x-axis
     fs = data[0,:]
@@ -326,8 +331,8 @@ def plot_sdata(data, s_param, IF_bandwidth, only_S21=0):
     
     # Only plot S21
     if only_S21:
+        plt.plot(fs, ydata[0,:])
         plt.plot(fs, ydata[1,:])
-        plt.plot(fs, ydata[2,:])
         
         # Format the figures
         plt.axis([min(fs), max(fs), np.floor(np.min(ydata[1,:])), np.ceil(np.max(ydata[1,:]))]) 
@@ -369,6 +374,7 @@ def plot_sdata(data, s_param, IF_bandwidth, only_S21=0):
 
 def plot_sdata_mag(data, s_param, IF_bandwidth, amplitude, only_S21=0):   
     """Plots magnitude of complex data (SDATA)"""
+    plt.close('all')
     
     # Get x-axis
     fs = data[0,:]
