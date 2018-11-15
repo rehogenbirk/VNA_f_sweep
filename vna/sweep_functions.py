@@ -146,6 +146,8 @@ def standard_sweep(instrument):
 
 def get_data(instrument, data_type='SDATA', error_correction=1):
     """Get the data from all measurements and time measurements took"""
+    # TODO split into two functions for complex and magnitude data
+    
     # Query for necessary data
     num_points      = vna.get_num_points(instrument)
     f_start, f_stop = vna.get_Df(instrument)
@@ -175,6 +177,7 @@ def get_data(instrument, data_type='SDATA', error_correction=1):
         
     ## Error correction
     # Does not work if two -200 values are adjacent
+    # TODO Remove this part as it is not necessary when for a proper measurement
     if error_correction:
         for i in range(len(data[:, 0])):
             for j in range(len(data[i])-1):
