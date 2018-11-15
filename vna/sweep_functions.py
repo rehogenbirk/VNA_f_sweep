@@ -231,16 +231,32 @@ def save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth
     f.write('num_points is %s \n' % (num_points))
     f.write('IF bandwidth is %s Hz \n' % (IF_bandwidth))
     f.write('Amplitude is %s dBm \n' % (amplitude))
-
+    
+    notes   = input('Measurement comment?\n')
+    
+    f.write('\nComments:\n%s' % (notes))
+    
     f.close()
     
     print('MESSAGE: Parameter file is saved')
     
     
+def save_plot(file_name):
+    """Saves current plot, both as pickle (figure) and .svg (image)"""
+    plt.savefig(file_name + '.svg')
+
+    fig     = plt.gcf()
+
+    with open(file_name + '.pkl', 'wb') as fid:
+        pkl.dump(fig, fid)
+
+    print('MESSAGE: Plot saved in \n%s' % (os.getcwd() ))
+    
     
     
 def plot_fdata(data, s_param, IF_bandwidth, only_S21=0):   
     """Plot magnitude data (FDATA)"""
+    plt.close('all')
     
     # Get x-axis
     fs = data[0,:]
