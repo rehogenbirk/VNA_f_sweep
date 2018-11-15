@@ -56,9 +56,9 @@ s_param         = ['S21']
 error_correction = 1
 
 #%% Code
-
 PNA, rm         = sweep.init()
 
+#%%
 sweep.reset(PNA)
 
 #%%
@@ -72,9 +72,10 @@ print('MESSAGE: Autoscale succesful')
 #%%
 data, elapsed   = sweep.get_data(PNA, error_correction=1)
 
-#%%
+#%% Save data
 full_file_name       = sweep.save_data(PNA, file_name, data, s_param)
 
+#%% Save parameters
 sweep.save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth, amplitude)
 
 #%%
