@@ -31,13 +31,17 @@ import vna_functions as vna
 
 T               = 3.8
 
-file_name       = 'VNAdata_%sK' % (T)
+file_name       = 'VNAdata'
 
 #
 #f_start         = 100       # MHz
 #f_stop          = 67000     # MHz
+
 f_start         = 4000      # MHz
 f_stop          = 6000      # MHz
+
+#f_start         = 100
+#f_stop          = 10000
 
 num_points      = 16001
 IF_bandwidth    = 200    # Hz
