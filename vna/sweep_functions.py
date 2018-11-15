@@ -385,15 +385,9 @@ def plot_sdata_mag(data, s_param, IF_bandwidth, amplitude, only_S21=0):
     num_points  = len(fs)
     
     # Separate S-parameter data from the rest
-    ydata = data[1:,:]
+    ydata   = data[1:,:]
     
-    # Calculate magnitude from complex data
-    data_mag    = np.zeros([ int(len(ydata[:,0]) /2), len(ydata[0,:]) ])
-    
-    for i in range(len(data_mag[:,0])):
-        for j in range(len(data_mag[0,:])):
-            data_mag[i, j]  = np.sqrt(ydata[2*i,j]**2 + ydata[2*i+1, j]**2)
-    data_mag        = 20 * np.log10(data_mag)
+    data_mag    = dat.convert_mag(ydata)
     
     ### Plotting
     
