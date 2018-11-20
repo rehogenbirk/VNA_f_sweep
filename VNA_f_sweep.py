@@ -32,7 +32,7 @@ import data_analysis as dat
 # ## Input parameters
 # =============================================================================
 
-T               = 3.8
+T               = 4.0
 
 file_name       = 'VNAdata'
 
@@ -82,7 +82,6 @@ full_file_name       = sweep.save_data(PNA, file_name, data, s_param)
 sweep.save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth, amplitude)
 
 #%%
-#sweep.plot_sdata(data, s_param, IF_bandwidth, only_S21=0)
 
 sweep.plot_sdata_mag(data, s_param, IF_bandwidth, amplitude, only_S21=0)
 
