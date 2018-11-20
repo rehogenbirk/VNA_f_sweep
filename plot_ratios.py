@@ -104,8 +104,9 @@ plt.title('Magnitude ratio between %s and %s \n%s num points, %s Hz IF bandwidth
 plt.legend(s_param)
 plt.xlabel('Frequency (%s)' % (f_unit))
 
-manager = plt.get_current_fig_manager()
-manager.window.showMaximized()
+# Maximizes window size
+#manager = plt.get_current_fig_manager()
+#manager.window.showMaximized()
 
 #%% Save plot magnitude ratio
 
