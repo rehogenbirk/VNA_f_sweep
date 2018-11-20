@@ -16,13 +16,15 @@ import os
 
 #%% Parameters
 
-figure_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\Data Third Light 181112\Ratios'
+figure_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data amplitude sweep\Sweep number 1'
 
-figure_name     = 'ratio_bla1_and_bla2'
+figure_name     = 'VNAdata_S21_181116_162416'
 
 #%% Get figure and open it
 
 figure_file     = os.path.join(figure_path, figure_name + '.pkl')
+
+plt.figure()
 
 with open(figure_file, 'rb') as fid:
     fig = pkl.load(fid)
