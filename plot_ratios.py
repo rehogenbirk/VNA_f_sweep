@@ -19,8 +19,6 @@ import os
 import pickle as pkl
 #%% Parameters
 
-
-
 delimiter       = ','
 
 f_unit          = 'Hz'
@@ -30,29 +28,29 @@ f               = 'f'
 s_param         = ['S21']
 
 IF_bandwidth    = 200 # Hz
-amplitude       = -50 # dBm
+amplitude       = [-60, -30] # dBm
 
 fs_min          = 4e9
 fs_max          = 6e9
 
 
-original_path       = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\Data Third Light 181112\Original'
+original_path       = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser'
 #original_path       = ''
-original_file_name  = 'VNAdata_3.7K_S21_181113_124516'
+original_file_name  = 'VNAdata_S21_181116_172226'
 
-comparison_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\Data Third Light 181112\Laser point'
+comparison_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser'
 #comparison_path      = ''
-comparison_file_name = 'VNAdata_3.7K_S21_181113_165617'
+comparison_file_name = 'VNAdata_S21_181116_173038'
 
-ratio_path          = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\Data Third Light 181112\Ratios\Point laser'
+ratio_path          = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser\Ratios'
 
 #%% Import data
 
 original_file       = os.path.join(original_path, original_file_name)
-original_data       = dat.load_complex_data(original_file)
+original_data       = dat.load_data(original_file)
 
 comparison_file     = os.path.join(comparison_path, comparison_file_name)
-comparison_data     = dat.load_complex_data(comparison_file)
+comparison_data     = dat.load_data(comparison_file)
 
 name_original       = input('Give name for orignal file\n')
 name_comparison     = input('Give name for comparison file\n')
