@@ -32,11 +32,15 @@ import data_analysis as dat
 # ## Input parameters
 # =============================================================================
 
-T               = 4.0
 
+
+file_path       = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181122 df0 test'
 file_name       = 'VNAdata'
 
-#
+meas_series     = 'Test 181122'
+
+T               = 4.0
+
 #f_start         = 100       # MHz
 #f_stop          = 67000     # MHz
 
@@ -49,7 +53,7 @@ f_stop          = 6000      # MHz
 num_points      = 16001
 IF_bandwidth    = 200    # Hz
 
-amplitude       = -50    # dBm
+amplitude       = -40    # dBm
 
 #s_param         = ['S11']  # List of strings
 s_param         = ['S21']
@@ -58,13 +62,15 @@ s_param         = ['S21']
 
 error_correction = 1
 
+file_name       = os.path.join(file_path, file_name)
+
 #%% Code
 PNA, rm         = sweep.init()
 
 #%%
 sweep.reset(PNA)
 
-#%%
+#%% Start measurment
 meas_names      = sweep.setup(PNA, f_start, f_stop, num_points, IF_bandwidth, amplitude, s_param)
 
 #%% Autoscale
@@ -72,14 +78,17 @@ vna.autoscale(PNA, 1)
 
 print('MESSAGE: Autoscale succesful')
 
-#%%
+#%% Get data from 
+
 data, elapsed   = sweep.get_data(PNA, error_correction=1)
 
 #%% Save data
-full_file_name       = sweep.save_data(PNA, file_name, data, s_param)
+
+full_file_name  = sweep.save_data(PNA, file_name, data, s_param)
 
 #%% Save parameters
-sweep.save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth, amplitude)
+
+sweep.save_parameters(full_file_name, meas_series, T, f_start, f_stop, num_points, IF_bandwidth, amplitude)
 
 #%%
 
