@@ -16,8 +16,8 @@ import data_analysis as dat
 
 ## Parameters
 
-file_path = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\Data Third Light 181112\Ratios\Laser 181115 data'
-file_name = 'ratio_column5_and_column7'
+file_path = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181120 Final measurements\Temperature sweep above Tc'
+file_name = 'VNAdata_S21_181120_130318'
 
 #file = file_path + file_name
 
@@ -47,11 +47,12 @@ f_stop  = np.max(fs)
 num_points  = len(data[0])
 
 
-#%% Changing the data and storing it again
-
-
-data_name = 'test' + '.csv'
-np.savetxt(data_name, saved_data, delimiter=',')
+##%% Changing the data and storing it again
+#
+#saved_data = '' 
+#
+#data_name = 'test' + '.csv'
+#np.savetxt(data_name, saved_data, delimiter=',')
 
 
 #%% Plotting
