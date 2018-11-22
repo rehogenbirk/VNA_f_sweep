@@ -225,7 +225,7 @@ def save_data(instrument, file_name, data, s_param):
     
 
 
-def save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth, amplitude):
+def save_parameters(full_file_name, meas_series, T, f_start, f_stop, num_points, IF_bandwidth, amplitude):
     f   = open(full_file_name + '_parameters.txt', 'w+')
     
     f.write('Temperature is %s K \n' % (T))
@@ -233,7 +233,9 @@ def save_parameters(full_file_name, T, f_start, f_stop, num_points, IF_bandwidth
     f.write('f_stop is %s Hz \n' % (f_stop))
     f.write('num_points is %s \n' % (num_points))
     f.write('IF bandwidth is %s Hz \n' % (IF_bandwidth))
-    f.write('Amplitude is %s dBm \n' % (amplitude))
+    f.write('Amplitude is %s dBm \n\n' % (amplitude))
+    
+    f.write('Serie: %s\n' % (meas_series))
     
     notes   = input('Measurement comment?\n')
     
@@ -253,7 +255,7 @@ def save_plot(file_name):
     with open(file_name + '.pkl', 'wb') as fid:
         pkl.dump(fig, fid)
 
-    print('MESSAGE: Plot saved in \n%s' % (os.getcwd() ))
+    print('MESSAGE: Plot saved in, if no path is given: \n%s' % (os.getcwd() ))
     
     
     
