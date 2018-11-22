@@ -13,32 +13,28 @@ Loads pickled (saved) figures
 import pickle as pkl
 import matplotlib.pyplot as plt
 import os
+import data_analysis as dat
 
 #%% Parameters
 
-figure_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data amplitude sweep\Sweep number 1'
+figure_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181120 Final measurements\Narrow line test\Wider line\Ratios'
 
-figure_name     = 'VNAdata_S21_181116_162416'
+figure_name     = 'ratio_between4and5_and_column5'
 
-#%% Get figure and open it
+fig, axis = dat.load_figure(figure_path, figure_name)
 
-figure_file     = os.path.join(figure_path, figure_name + '.pkl')
+figure_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181120 Final measurements\Narrow line test\Wider line\Ratios'
 
-plt.figure()
+figure_name     = 'ratio_between4and5_and_column8'
 
-with open(figure_file, 'rb') as fid:
-    fig = pkl.load(fid)
-
-plt.show()  
-
-axis    = fig.gca()
+fig2, axis2 = dat.load_figure(figure_path, figure_name)
 
 #%% Change plot parameters
 
 xlabel  = 'Frequency (Hz)'
 ylabel  = 'Magnitude (dB)'
-title   = 'Ratio of transmission with closed 300K window and laser'
-legend  = ['Closed window', 'Laser']
+#title   = 'Magnitude ratio' #of transmission with closed 300K window and laser'
+#legend  = ['S21']
 
 ## Format the figures
 
@@ -53,5 +49,5 @@ axis.yaxis.grid(which='minor')
 # Sets labels, legend and title
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.legend(legend)
-plt.title(title)
+#plt.legend(legend)
+#plt.title(title)
