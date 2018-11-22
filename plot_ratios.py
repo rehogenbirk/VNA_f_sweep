@@ -28,21 +28,21 @@ f               = 'f'
 s_param         = ['S21']
 
 IF_bandwidth    = 200 # Hz
-amplitude       = [-60, -30] # dBm
+amplitude       = -40 # dBm
 
 fs_min          = 4e9
 fs_max          = 6e9
 
 
-original_path       = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser'
+original_path       = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181122 df0 test'
 #original_path       = ''
-original_file_name  = 'VNAdata_S21_181116_172226'
+original_file_name  = 'VNAdata_S21_181122_122351'
 
-comparison_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser'
+comparison_path     = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181122 df0 test'
 #comparison_path      = ''
-comparison_file_name = 'VNAdata_S21_181116_173038'
+comparison_file_name = 'VNAdata_S21_181122_120933'
 
-ratio_path          = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181116 Data point laser\Ratios'
+ratio_path          = r'C:\Users\Rijk\Documents\NAOJ Engineering\Vector Network Analyzer\Data_git\181122 df0 test'
 
 #%% Import data
 
